@@ -70,14 +70,14 @@ public class Main extends Fragment implements OnLoadmoreListener,
 		} else
 		{
 			Log.e("onCreate", "onCreateelse");
-			DataAdapter temp = savedInstanceState.getParcelable("datalist");
+			WeakReference<DataAdapter> temp = new WeakReference<DataAdapter>((DataAdapter) savedInstanceState.getParcelable("datalist"));
 			if (temp != null) 
-				mAdapter.setLiquorList(temp.getLiquorList());
-			else
-				Log.e("savedInstanceState getparcelable is",String.valueOf(temp));
-			temp = null;
-			savedInstanceState.remove("datalist");
-			savedInstanceState.clear();
+				mAdapter.setLiquorList(temp.get().getLiquorList());
+			//else
+				//Log.e("savedInstanceState getparcelable is",String.valueOf(temp.get()));
+			//temp = null;
+			//savedInstanceState.remove("datalist");
+			//savedInstanceState.clear();
 			
 		}
 		mAdapter.notifyDataSetChanged();
@@ -180,11 +180,10 @@ public class Main extends Fragment implements OnLoadmoreListener,
 			@Override
 			public void onDrawerClosed(View arg0)
 			{
-				stgv.setSelectionToTop();
 				switch(DRAWER_ITEM_CLICKED)
 				{
 					case 0:
-						
+						stgv.setSelectionToTop();
 						FlipOnSelect.onFlipSelectedItem(mAdapter,"AddNewDrink",
 								getFragmentManager().getBackStackEntryCount() > 0);
 						break;

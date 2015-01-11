@@ -78,6 +78,7 @@ public class AddDrinkToDB extends Fragment
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
+		setRetainInstance(true);
 		imgview = (ImageView)getView().findViewById(R.id.img_wine);
 		imgview.setOnClickListener(new OnClickListener()
 		{
