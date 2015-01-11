@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+ 
+    <com.faustus.mixins.STGVImageView
+        android:id="@+id/img_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ddd"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@null"
+        />
+    
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fmlayout"
+        >
+        <CheckBox
+            android:id="@+id/checkbox"
+ 			android:layout_gravity="top|left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:tag="cbox" 
+            android:visibility="gone"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
+    </FrameLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradientbg"
+        android:orientation="vertical" 
+        android:layout_alignBottom="@id/img_content">
+
+        <TextView
+            android:id="@+id/img_label"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FFFFFF" 
+            android:textSize="30sp"/>
+
+    </RelativeLayout>
+    
+    
+
+    <!--TextView
+        android:id="@+id/img_label"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:padding="8dp"
+        android:layout_alignBottom="@id/img_content"
+        android:background="#aa000000"
+        android:textColor="#fff" 
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="center_vertical"/-->
+
+</RelativeLayout>
