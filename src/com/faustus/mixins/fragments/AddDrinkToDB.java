@@ -149,6 +149,14 @@ public class AddDrinkToDB extends Fragment
 		}
 	}
 
+	@Override
+	public void onDestroy()
+	{
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		garbageCollect();
+	}
+	
 	private void initializeSeekBars()
 	{
 		int counter = 1;
@@ -379,5 +387,24 @@ public class AddDrinkToDB extends Fragment
 			alertDialogBuilder.create().show();
 		}
 		
+	}
+	
+	private void garbageCollect()
+	{
+		seekbar = null;
+		seekbarValue = null;
+		label = null;
+		seekbars = null;
+		textlabels = null;
+		//private ArrayList<String> order = new ArrayList<String>();
+		order = null;
+		button = null;
+		ingredients = null;
+		imgview = null;
+		imgviewURI = null;
+		mAdapter = null;
+		JSONLiquorAttrib = null;
+		JSONLiquorOrder = null;
+		tag = null;
 	}
 }

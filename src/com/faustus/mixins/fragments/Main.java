@@ -224,6 +224,15 @@ public class Main extends Fragment implements OnLoadmoreListener,
 	{
 		super.onDestroy();
 		Log.e("onDestroy", "onDestroy");
+		stgv.setOnClickListener(null);
+		stgv.setOnScrollListener(null);
+		mDrawerLayout.setDrawerListener(null);
+		stgv = null;
+		mAdapter = null;
+		mNavAdapter = null;
+		FlipOnSelect = null;
+		slideDrawer = null;
+		mDrawerLayout = null;
 	}
 
 	@Override

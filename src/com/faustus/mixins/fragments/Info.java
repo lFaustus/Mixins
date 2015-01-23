@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,9 @@ public class Info extends Fragment
 	{
 		return inflater.inflate(R.layout.info_view, container, false);
 	}
-
+	
+	
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
@@ -163,6 +166,32 @@ public class Info extends Fragment
 			}
 		});
 
+	}
+	
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		garbageCollect();
+		
+	}
+	
+	private void garbageCollect()
+	{
+		activity = null;
+		label = null; 
+		description = null; 
+		extra = null;		
+		text1 = null;
+		text2 = null;
+		imgview = null;
+		btn = null;
+		bmp = null;
+		name = null;
+		descript = null;
+		daniela = null;
+		segoe = null;
+		liquorList = null;
 	}
 	
 }

@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -46,7 +48,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	BluetoothSocket btSocket = null;
 	SaveBluetoothConfig saveBTconfig = null;
 	Handler handler = new Handler(this);
-	
+	Bundle savedInstanceStateBundle = null;
 	//Info infofrag;
 
 	// SPP UUID service
@@ -67,14 +69,14 @@ public class MainActivity extends SherlockFragmentActivity implements
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		 setContentView(R.layout.root_view);
-
-		/*if (savedInstanceState == null)
+		if (savedInstanceState == null)
 		{
 			setContentView(R.layout.splashscreen);
 			txt = (TextView) findViewById(R.id.loadingtext);
 			tf = Typeface.createFromAsset(getAssets(), "segoeui.ttf");
 			txt.setTypeface(tf);
-			new BluetoothTask(savedInstanceState).execute();
+			savedInstanceStateBundle = savedInstanceState;
+			checkBTState(savedInstanceStateBundle);
 
 			return;
 		}
@@ -84,13 +86,13 @@ public class MainActivity extends SherlockFragmentActivity implements
 		btAdapter = saveBTconfig.getBluetoothAdapter();
 		btSocket = saveBTconfig.getBluetoothSocket();
 		outStream = saveBTconfig.getOutStream();
-		device = saveBTconfig.getBluetoothDevice();*/
-		if (savedInstanceState == null)
+		device = saveBTconfig.getBluetoothDevice();
+		/*if (savedInstanceState == null)
 		{
 
 			getFragmentManager().beginTransaction()
 					.add(R.id.rootview, new Main(), "MainFrag").commit();
-		}
+		}*/
 
 	}
 
@@ -151,6 +153,44 @@ public class MainActivity extends SherlockFragmentActivity implements
 		super.onBackPressed();
 		finish();
 	}
+	
+	
+	
+	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(requestCode == 1)
+		{
+			if(resultCode == Activity.RESULT_OK)
+			{
+				
+				new BluetoothTask(savedInstanceStateBundle).execute();
+				
+			}
+		}
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		
+		super.onDestroy();
+		flip = this;
+		txt = null;
+		tf = null;
+		btAdapter = null;
+		outStream = null;
+		device = null;
+		btSocket = null;
+		saveBTconfig = null;
+		savedInstanceStateBundle = null;
+	}
+	
+	
 
 	@Override
 	public boolean handleMessage(Message msg)
@@ -209,15 +249,42 @@ public class MainActivity extends SherlockFragmentActivity implements
 				Toast.LENGTH_LONG).show();
 		finish();
 	}
+	
+	private void checkBTState(Bundle savedInstanceState)
+	{
+		// Check for Bluetooth support and then check to make sure it is
+		// turned on
+		// Emulator doesn't support Bluetooth and will return null
+		btAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (btAdapter == null)
+		{
+			errorExit("Fatal Error", "Bluetooth not support");
+			// return false;
+		} 
+		else
+		{
+			if (btAdapter.isEnabled())
+				new BluetoothTask(savedInstanceState).execute();
+			else
+			{
+				// Prompt user to turn on Bluetooth
+				Intent enableBtIntent = new Intent(
+						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				startActivityForResult(enableBtIntent, 1);
+			}
+		}
+		
+	}
+
 
 	public class BluetoothTask extends AsyncTask<Void, String, Void>
 	{
 
-		Bundle savedInstanceState = null;
+		//
 
 		public BluetoothTask(Bundle savedInstanceState)
 		{
-			this.savedInstanceState = savedInstanceState;
+			//this.savedInstanceState = savedInstanceState;
 			saveBTconfig = new SaveBluetoothConfig();
 			if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -229,75 +296,79 @@ public class MainActivity extends SherlockFragmentActivity implements
 		protected void onPreExecute()
 		{
 
-			btAdapter = BluetoothAdapter.getDefaultAdapter();
-			checkBTState();
+			//btAdapter = BluetoothAdapter.getDefaultAdapter();
+			//checkBTState();
 			
 		}
 
 		@Override
 		protected Void doInBackground(Void... params)
 		{
-			device = btAdapter.getRemoteDevice(address);
-
-			// Two things are needed to make a connection:
-			// A MAC address, which we got above.
-			// A Service ID or UUID. In this case we are using the
-			// UUID for SPP.
-			try
-			{
-				btSocket = createBluetoothSocket(device);
-			} catch (IOException e)
-			{
-				errorExit(
-						"Fatal Error",
-						"In onResume() and socket create failed: "
-								+ e.getMessage() + ".");
-			}
-
-			// Discovery is resource intensive. Make sure it isn't going on
-			// when you attempt to connect and pass your message.
-			btAdapter.cancelDiscovery();
-
-			// Establish the connection. This will block until it connects.
-			publishProgress("...Connecting...");
-			sleep(1500);
-			try
-			{
-				btSocket.connect();
-				publishProgress("....Connection ok...");
+			
+				publishProgress("...Bluetooth ON...");
 				sleep(1500);
-			} catch (IOException e)
-			{
+				
+				device = btAdapter.getRemoteDevice(address);
+	
+				// Two things are needed to make a connection:
+				// A MAC address, which we got above.
+				// A Service ID or UUID. In this case we are using the
+				// UUID for SPP.
 				try
 				{
-					btSocket.close();
-					publishProgress("....Closing Connection..");
-				} catch (IOException e2)
+					btSocket = createBluetoothSocket(device);
+				} catch (IOException e)
 				{
-					errorExit("Fatal Error",
-							"In onResume() and unable to close socket during connection failure"
-									+ e2.getMessage() + ".");
+					errorExit(
+							"Fatal Error",
+							"In onResume() and socket create failed: "
+									+ e.getMessage() + ".");
 				}
-			}
-
-			// Create a data stream so we can talk to server.
-			publishProgress("...Create Socket...");
-			sleep(1500);
-			publishProgress("...Connected...");
-			sleep(1500);
-
-			// to be changed later for 2 way communication
-			try
-			{
-				outStream = btSocket.getOutputStream();
-			} catch (IOException e)
-			{
-				errorExit(
-						"Fatal Error",
-						"In onResume() and output stream creation failed:"
-								+ e.getMessage() + ".");
-			}
-
+	
+				// Discovery is resource intensive. Make sure it isn't going on
+				// when you attempt to connect and pass your message.
+				btAdapter.cancelDiscovery();
+	
+				// Establish the connection. This will block until it connects.
+				publishProgress("...Connecting...");
+				sleep(1500);
+				try
+				{
+					btSocket.connect();
+					publishProgress("....Connection ok...");
+					sleep(1500);
+				} catch (IOException e)
+				{
+					try
+					{
+						btSocket.close();
+						publishProgress("....Closing Connection..");
+					} catch (IOException e2)
+					{
+						errorExit("Fatal Error",
+								"In onResume() and unable to close socket during connection failure"
+										+ e2.getMessage() + ".");
+					}
+				}
+	
+				// Create a data stream so we can talk to server.
+				publishProgress("...Create Socket...");
+				sleep(1500);
+				publishProgress("...Connected...");
+				sleep(1500);
+	
+				// to be changed later for 2 way communication
+				try
+				{
+					outStream = btSocket.getOutputStream();
+				} catch (IOException e)
+				{
+					errorExit(
+							"Fatal Error",
+							"In onResume() and output stream creation failed:"
+									+ e.getMessage() + ".");
+				}
+			
 			return null;
 		}
 
@@ -311,7 +382,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		@Override
 		protected void onPostExecute(Void result)
 		{
-			if (this.savedInstanceState == null)
+			if (savedInstanceStateBundle == null)
 			{
 				saveBTconfig.saveBluetoothAdapter(btAdapter);
 				saveBTconfig.saveBluetoothDevice(device);
@@ -344,34 +415,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			return device.createRfcommSocketToServiceRecord(MY_UUID);
 		}
 
-		private void checkBTState()
-		{
-			// Check for Bluetooth support and then check to make sure it is
-			// turned on
-			// Emulator doesn't support Bluetooth and will return null
-			if (btAdapter == null)
-			{
-				errorExit("Fatal Error", "Bluetooth not support");
-				// return false;
-			} else
-			{
-				if (btAdapter.isEnabled())
-				{
-					// Log.d(TAG, "...Bluetooth ON...");
-					publishProgress("...Bluetooth ON...");
-					sleep(1500);
-					// return true;
-				} else
-				{
-					// Prompt user to turn on Bluetooth
-					Intent enableBtIntent = new Intent(
-							BluetoothAdapter.ACTION_REQUEST_ENABLE);
-					startActivityForResult(enableBtIntent, 1);
-					// return false;
-				}
-			}
-		}
-
+		
 		private void sleep(final int millisec)
 		{
 			try
