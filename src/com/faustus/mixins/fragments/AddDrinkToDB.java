@@ -125,7 +125,6 @@ public class AddDrinkToDB extends Fragment
 				{
 					e.printStackTrace();
 				}
-				
 			}
 		});
 	}
@@ -145,6 +144,7 @@ public class AddDrinkToDB extends Fragment
 				ImageLoader mLoader = new ImageLoader();
 				imgviewURI = data.getStringExtra("choosenImage");
 				imgview.setImageBitmap(mLoader.decodeFromFile(new File(imgviewURI), 70));
+				mLoader = null;
 			}
 		}
 	}

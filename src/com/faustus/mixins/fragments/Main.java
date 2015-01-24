@@ -28,8 +28,7 @@ import com.faustus.mixins.database.DataAdapter;
 import com.faustus.mixins.database.DataSet;
 import com.faustus.mixins.database.LiquorList;
 
-public class Main extends Fragment implements OnLoadmoreListener,
-		OnScrollListener
+public class Main extends Fragment implements OnLoadmoreListener
 {
 
 	private StaggeredGridView stgv;
@@ -95,8 +94,6 @@ public class Main extends Fragment implements OnLoadmoreListener,
 	{
 		super.onActivityCreated(savedInstanceState);
 		Log.e("onActivityCreated", "onActivityCreated");
-		
-		
 
 		stgv = (StaggeredGridView) getView().findViewById(R.id.stgv);
 		
@@ -145,11 +142,6 @@ public class Main extends Fragment implements OnLoadmoreListener,
 		 * for implementations
 		 */
 		stgv.setOnLoadmoreListener(this);
-
-		/*
-		 * check below for implementations
-		 */
-		stgv.setOnScrollListener(this);
 
 		stgv.setOnItemClickListener(new StaggeredOnClickListener());
 		
@@ -224,9 +216,9 @@ public class Main extends Fragment implements OnLoadmoreListener,
 	{
 		super.onDestroy();
 		Log.e("onDestroy", "onDestroy");
-		stgv.setOnClickListener(null);
-		stgv.setOnScrollListener(null);
-		mDrawerLayout.setDrawerListener(null);
+		//stgv.setOnClickListener(null);
+		//stgv.setOnScrollListener(null);
+		//mDrawerLayout.setDrawerListener(null);
 		stgv = null;
 		mAdapter = null;
 		mNavAdapter = null;
@@ -241,30 +233,6 @@ public class Main extends Fragment implements OnLoadmoreListener,
 		new LoadMoreTask().execute();
 	}
 
-	@Override
-	public void onScrollStateChanged(ViewGroup view, int scrollState)
-	{
-		/*if(scrollState == OnScrollListener.SCROLL_STATE_IDLE)
-		{
-			ImageOnIdle.resume(activity);
-			Log.e("ENTERED","IF");
-		}
-		else
-		{
-			ImageOnIdle.pause();
-			Log.e("ENTERED","ELSE");
-		}*/
-	
-			
-	}
-
-	@Override
-	public void onScroll(ViewGroup view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount)
-	{
-		
-		
-	}
 
 	public class LoadMoreTask extends AsyncTask<Void, Void, Void>
 	{
@@ -342,11 +310,16 @@ public class Main extends Fragment implements OnLoadmoreListener,
 				 * (RelativeLayout)staggeredGridViewFlux.
 				 * getChildAt(position);
 				 */
+				stgv.setSelectionToTop();
 				WeakReference<RelativeLayout> rl = new WeakReference<RelativeLayout>((RelativeLayout) view);
 				WeakReference<STGVImageView> img = new WeakReference<STGVImageView>((STGVImageView) rl.get().findViewById(R.id.img_content));
-				LiquorList liq = (LiquorList) img.get().getTag();
-				FlipOnSelect.onFlipSelectedItem(liq,"Info",
+				WeakReference<LiquorList> liq = new WeakReference<LiquorList>((LiquorList) img.get().getTag());
+				mAdapter.clearLiquorList();
+				mAdapter.LoadItems();
+				mAdapter.notifyDataSetChanged();
+				FlipOnSelect.onFlipSelectedItem(liq.get(),"Info",
 						getFragmentManager().getBackStackEntryCount() > 0);
+				
 			}
 			
 		}

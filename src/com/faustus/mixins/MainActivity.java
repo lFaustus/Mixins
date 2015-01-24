@@ -179,7 +179,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	{
 		
 		super.onDestroy();
-		flip = this;
+		flip = null;
 		txt = null;
 		tf = null;
 		btAdapter = null;
@@ -277,11 +277,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 	}
 
 
-	public class BluetoothTask extends AsyncTask<Void, String, Void>
+	public class BluetoothTask extends AsyncTask<Void, String, Boolean>
 	{
-
-		//
-
+		
 		public BluetoothTask(Bundle savedInstanceState)
 		{
 			//this.savedInstanceState = savedInstanceState;
@@ -302,7 +300,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		}
 
 		@Override
-		protected Void doInBackground(Void... params)
+		protected Boolean doInBackground(Void... params)
 		{
 			
 				publishProgress("...Bluetooth ON...");
@@ -317,7 +315,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 				try
 				{
 					btSocket = createBluetoothSocket(device);
-				} catch (IOException e)
+				} 
+				
+				catch (IOException e)
 				{
 					errorExit(
 							"Fatal Error",
@@ -332,18 +332,52 @@ public class MainActivity extends SherlockFragmentActivity implements
 				// Establish the connection. This will block until it connects.
 				publishProgress("...Connecting...");
 				sleep(1500);
+				
 				try
 				{
 					btSocket.connect();
 					publishProgress("....Connection ok...");
 					sleep(1500);
-				} catch (IOException e)
+					
+					// Create a data stream so we can talk to server.
+					publishProgress("...Create Socket...");
+					sleep(1500);
+					
+					publishProgress("...Connected...");
+					sleep(1500);
+		
+					// to be changed later for 2 way communication
+					try
+					{
+						outStream = btSocket.getOutputStream();
+						return true;
+					} 
+					
+					catch (IOException e)
+					{
+						errorExit(
+								"Fatal Error",
+								"In onResume() and output stream creation failed:"
+										+ e.getMessage() + ".");
+					}
+				
+				} 
+				
+				catch (IOException e)
 				{
 					try
 					{
 						btSocket.close();
-						publishProgress("....Closing Connection..");
-					} catch (IOException e2)
+						publishProgress("....Paired Device Not Found...","Please Turn on the paired device");
+						sleep(1500);
+						
+						//publishProgress("....Closing Connection...");
+						//sleep(1500);
+						
+						//return false;
+					} 
+					
+					catch (IOException e2)
 					{
 						errorExit("Fatal Error",
 								"In onResume() and unable to close socket during connection failure"
@@ -351,38 +385,23 @@ public class MainActivity extends SherlockFragmentActivity implements
 					}
 				}
 	
-				// Create a data stream so we can talk to server.
-				publishProgress("...Create Socket...");
-				sleep(1500);
-				publishProgress("...Connected...");
-				sleep(1500);
-	
-				// to be changed later for 2 way communication
-				try
-				{
-					outStream = btSocket.getOutputStream();
-				} catch (IOException e)
-				{
-					errorExit(
-							"Fatal Error",
-							"In onResume() and output stream creation failed:"
-									+ e.getMessage() + ".");
-				}
-			
-			return null;
+			return false;
 		}
 
 		@Override
 		protected void onProgressUpdate(String... values)
 		{
 			txt.setText(values[0]);
+			
+			if(values.length == 2)
+				errorExit("Failed to connect to paired Device", values[1]);
 
 		}
 
 		@Override
-		protected void onPostExecute(Void result)
+		protected void onPostExecute(Boolean result)
 		{
-			if (savedInstanceStateBundle == null)
+			if (savedInstanceStateBundle == null && result)
 			{
 				saveBTconfig.saveBluetoothAdapter(btAdapter);
 				saveBTconfig.saveBluetoothDevice(device);

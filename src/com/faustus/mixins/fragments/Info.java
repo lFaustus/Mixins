@@ -30,7 +30,7 @@ import com.maurycyw.lazylist.staggeredgridviewlib.loader.ImageLoader;
 
 public class Info extends Fragment
 {
-	private Activity activity;
+	
 	private TextView label, description, extra,text1,text2;
 	private ImageView imgview;
 	private Button btn;
@@ -71,7 +71,6 @@ public class Info extends Fragment
 	public void onAttach(Activity activity)
 	{
 		super.onAttach(activity);
-		this.activity = activity;
 		//FlipOnSelect = (FlipOnSelectedItemListener) activity;
 		//handler = new Handler((Callback) activity);
 		handler = ((MainActivity)activity).getHandler();
@@ -98,8 +97,8 @@ public class Info extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
-		daniela = Typeface.createFromAsset(activity.getAssets(), "danielabold.ttf");
-		segoe = Typeface.createFromAsset(activity.getAssets(), "segoeuisl.ttf");
+		daniela = Typeface.createFromAsset(getActivity().getAssets(), "danielabold.ttf");
+		segoe = Typeface.createFromAsset(getActivity().getAssets(), "segoeuisl.ttf");
 		btn = (Button) getView().findViewById(R.id.button1);
 		imgview = (ImageView) getView().findViewById(R.id.img_wine);
 		label = (TextView) getView().findViewById(R.id.label_text);
@@ -125,11 +124,15 @@ public class Info extends Fragment
 			public void onClick(View v)
 			{
 				Message msg = Message.obtain();
+				JSONArray arr = null;
+				ByteArrayOutputStream outstream = null;
+				DataOutputStream dataOutstream  = null;
 				try
 				{
-					JSONArray arr = liquorList.getJSON().getJSONArray("Order");
-					ByteArrayOutputStream outstream = new ByteArrayOutputStream();
-					DataOutputStream dataOutstream = new DataOutputStream(outstream);
+					arr = liquorList.getJSON().getJSONArray("Order");
+					outstream = new ByteArrayOutputStream();
+					dataOutstream = new DataOutputStream(outstream);
+					
 					for(int i = 0; i < arr.length(); i++)
 					{
 						try
@@ -147,6 +150,13 @@ public class Info extends Fragment
 				catch (JSONException e)
 				{
 					e.printStackTrace();
+				}
+				finally
+				{
+					arr = null;
+					outstream = null;
+					dataOutstream = null;
+					msg = null;
 				}
 				
 				/*try
@@ -173,12 +183,12 @@ public class Info extends Fragment
 	{
 		super.onDestroy();
 		garbageCollect();
+		Log.e("ENTERED","ONDESTROY");
 		
 	}
-	
+
 	private void garbageCollect()
 	{
-		activity = null;
 		label = null; 
 		description = null; 
 		extra = null;		
