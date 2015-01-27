@@ -2,12 +2,14 @@ package com.faustus.mixins;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,14 +17,19 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +41,7 @@ import com.faustus.mixins.database.LiquorList;
 import com.faustus.mixins.fragments.AddDrinkToDB;
 import com.faustus.mixins.fragments.Info;
 import com.faustus.mixins.fragments.Main;
+import com.maurycyw.lazylist.staggeredgridviewlib.loader.ImageLoader;
 
 public class MainActivity extends SherlockFragmentActivity implements
 		FlipOnSelectedItemListener, Handler.Callback
@@ -41,7 +49,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	FlipOnSelectedItemListener flip = (FlipOnSelectedItemListener) this;
 	private static TextView txt;
-	private Typeface tf;
+	private static Typeface tf;
+	private static RelativeLayout relativelayout;
 	BluetoothAdapter btAdapter = null;
 	OutputStream outStream = null;
 	BluetoothDevice device = null;
@@ -49,6 +58,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	SaveBluetoothConfig saveBTconfig = null;
 	Handler handler = new Handler(this);
 	Bundle savedInstanceStateBundle = null;
+	Bitmap bitmap = null;
 	//Info infofrag;
 
 	// SPP UUID service
@@ -68,11 +78,38 @@ public class MainActivity extends SherlockFragmentActivity implements
 		// removes notification bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		 setContentView(R.layout.root_view);
+		
 		if (savedInstanceState == null)
 		{
 			setContentView(R.layout.splashscreen);
 			txt = (TextView) findViewById(R.id.loadingtext);
+			relativelayout = (RelativeLayout)findViewById(R.id.splash_root);
+			
+			try 
+		    { 
+			    File f=new File(Environment.getExternalStorageDirectory() + File.separator + "tempfile");
+			    InputStream inputStream = getResources().openRawResource(R.drawable.splash2);
+			    OutputStream out=new FileOutputStream(f);
+			    byte[] buf=new byte[1024];
+			    int len;
+			    while((len=inputStream.read(buf))>0)
+			    	out.write(buf,0,len);
+			    out.close();
+			    inputStream.close();
+			    bitmap = new ImageLoader().decodeFromFile(f, 100);
+			    Drawable drawable = new BitmapDrawable(bitmap);
+			    relativelayout.setBackgroundDrawable(drawable);
+			    //f.delete();
+			    buf = null;
+			    inputStream = null;
+			    out = null;
+			    drawable = null;
+		    } 
+		    catch (IOException e){
+		    	Log.e("error",e.toString());
+		    }
+		     
+			
 			tf = Typeface.createFromAsset(getAssets(), "segoeui.ttf");
 			txt.setTypeface(tf);
 			savedInstanceStateBundle = savedInstanceState;
@@ -174,14 +211,14 @@ public class MainActivity extends SherlockFragmentActivity implements
 		}
 	}
 	
+	
+	
 	@Override
 	protected void onDestroy()
 	{
 		
 		super.onDestroy();
 		flip = null;
-		txt = null;
-		tf = null;
 		btAdapter = null;
 		outStream = null;
 		device = null;
@@ -190,7 +227,17 @@ public class MainActivity extends SherlockFragmentActivity implements
 		savedInstanceStateBundle = null;
 	}
 	
-	
+	@Override
+	public void onAttachFragment(android.app.Fragment fragment)
+	{
+		// TODO Auto-generated method stub
+		super.onAttachFragment(fragment);
+		if(bitmap !=null)
+			bitmap.recycle();
+		relativelayout.setBackgroundDrawable(null);
+		txt = null;
+		tf = null;
+	}
 
 	@Override
 	public boolean handleMessage(Message msg)
@@ -393,15 +440,15 @@ public class MainActivity extends SherlockFragmentActivity implements
 		{
 			txt.setText(values[0]);
 			
-			if(values.length == 2)
-				errorExit("Failed to connect to paired Device", values[1]);
+			//if(values.length == 2)
+				//errorExit("Failed to connect to paired Device", values[1]);
 
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result)
 		{
-			if (savedInstanceStateBundle == null && result)
+			if (savedInstanceStateBundle == null )
 			{
 				saveBTconfig.saveBluetoothAdapter(btAdapter);
 				saveBTconfig.saveBluetoothDevice(device);

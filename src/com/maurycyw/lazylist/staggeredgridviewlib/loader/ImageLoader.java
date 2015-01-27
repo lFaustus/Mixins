@@ -126,7 +126,7 @@ public class ImageLoader {
     	{
     		imageView.setScaleType(ScaleType.FIT_XY);
         	imageView.setImageBitmap(bitmap);
-        	Log.d("ENTERED REC DISP","TEST");
+        	Log.d("Bitmap From","Memory Cache");
     	}
     	else
     	{
@@ -192,6 +192,7 @@ public class ImageLoader {
              ex.printStackTrace();
              if(ex instanceof OutOfMemoryError)
                  memoryCache.clear();
+            	 //clearCache();
              return null;
           }
     }
@@ -204,7 +205,7 @@ public class ImageLoader {
         Bitmap b = decodeFile(f);
         if(b!=null)
         {
-        	Log.d("YE","YE");
+        	Log.d("Bitmap From","SD Cache");
             return b;
         }
         

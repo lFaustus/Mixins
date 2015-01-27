@@ -104,17 +104,18 @@ public class Main extends Fragment implements OnLoadmoreListener
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
 		{
-			if(DataSet.getPictures().size()/2 <10)
+			stgv.setColumnCount(1);
+			/*if(DataSet.getPictures().size()/2 <10)
 				stgv.setColumnCount(1);
 			else
-				stgv.setColumnCount(2);
+				stgv.setColumnCount(2);*/
 		} 
 		else
 		{
-			if(DataSet.getPictures().size()/2 <10)
+			/*if(DataSet.getPictures().size()/2 <10)
 				stgv.setColumnCount(2);
 			else
-				stgv.setColumnCount(3);
+				stgv.setColumnCount(3);*/
 		}
 			
 		
@@ -142,6 +143,31 @@ public class Main extends Fragment implements OnLoadmoreListener
 		 * for implementations
 		 */
 		stgv.setOnLoadmoreListener(this);
+		
+		stgv.setOnScrollListener(new OnScrollListener()
+		{
+			
+			@Override
+			public void onScrollStateChanged(ViewGroup view, int scrollState)
+			{
+				if(scrollState == SCROLL_STATE_IDLE)
+				{
+					stgv.invalidate();
+					mAdapter.setSCROLL_STATE(SCROLL_STATE_IDLE);
+					Log.w("scroll state","idle");
+				}
+					
+				
+			}
+			
+			@Override
+			public void onScroll(ViewGroup view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 		stgv.setOnItemClickListener(new StaggeredOnClickListener());
 		

@@ -9,8 +9,9 @@ public class Items implements Comparable<Items>
 	{
 		this.name = name;
 		this.imgPath = imgPath;
+		
 	}
-	
+
 	public String getName()
 	{
 		return name;

@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:paddingRight="5dp"
-        android:src="@drawable/pic4" />
+        />
 
     <TextView
         android:id="@+id/imgname"

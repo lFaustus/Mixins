@@ -13,18 +13,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bulletnoid.android.widget.StaggeredGridView.StaggeredGridView;
 import com.faustus.mixins.R;
 import com.faustus.mixins.STGVImageView;
 import com.maurycyw.lazylist.staggeredgridviewlib.loader.ImageLoader;
 
 public class DataAdapter extends BaseAdapter implements Parcelable
 {
-	private Context context;
+	private static Context context;
 	private ImageLoader mLoader;
 	private ArrayList<LiquorList> pictures;
+	private final int SCROLL_STATE_ONLOAD = -1;
+	private int SCROLL_STATE = -1;
 
 	public DataAdapter(Context context)
 	{
@@ -60,6 +64,18 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		
 	}
 	
+	
+	
+	public int getSCROLL_STATE()
+	{
+		return SCROLL_STATE;
+	}
+
+	public void setSCROLL_STATE(int sCROLL_STATE)
+	{
+		SCROLL_STATE = sCROLL_STATE;
+	}
+
 	public ArrayList<LiquorList> getLiquorList()
 	{
 		return pictures;
@@ -111,15 +127,15 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		{
 			viewholder = (ViewHolder) view.getTag();
 		}
+		viewholder.img_content.setImageBitmap(null);
 		viewholder.img_content.setTag(liq);
 		viewholder.img_label.setText(liq.getName());
-		mLoader.DisplayImage(liq.getUrl(), viewholder.img_content,liq.getName());
-		
-	
+		if(getSCROLL_STATE() == StaggeredGridView.OnScrollListener.SCROLL_STATE_IDLE || getSCROLL_STATE() == SCROLL_STATE_ONLOAD)
+			mLoader.DisplayImage(liq.getUrl(), viewholder.img_content,liq.getName());
 		return view;
 	}
 	
-	class ViewHolder
+	static class ViewHolder
 	{
 		STGVImageView img_content;
 		TextView img_label;
