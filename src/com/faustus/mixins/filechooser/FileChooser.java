@@ -36,6 +36,7 @@ public class FileChooser extends ListActivity
 		super.onCreate(savedInstanceState);
 		targetFiles = new File(targetPath);
 		fill(targetFiles);
+		getListView().setVerticalScrollBarEnabled(false);
 		getListView().setRecyclerListener(new RecyclerListener()
 		{
 			

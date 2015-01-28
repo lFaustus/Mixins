@@ -31,6 +31,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.faustus.mixins.R;
+import com.faustus.mixins.STGVImageView;
 import com.faustus.mixins.database.DBAdapter;
 import com.faustus.mixins.database.DataAdapter;
 import com.faustus.mixins.filechooser.FileChooser;
@@ -47,7 +48,7 @@ public class AddDrinkToDB extends Fragment
 	private Map<String,String> order = Collections.synchronizedMap(new LinkedHashMap<String, String>());
 	private Button button;
 	private String[] ingredients = new String[]{"Milk","Choco","Vanilla","Caramel","Cheese","Yogurt"};
-	private ImageView imgview;
+	private STGVImageView imgview;
 	private String imgviewURI = "";
 	private WeakReference<DataAdapter> mAdapter;
 	private JSONObject JSONLiquorAttrib;
@@ -79,7 +80,10 @@ public class AddDrinkToDB extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
-		imgview = (ImageView)getView().findViewById(R.id.img_wine);
+		imgview = (STGVImageView)getView().findViewById(R.id.img_wine);
+		imgview.enableCustomImageViewSize(true);
+		imgview.setWidth(200);
+		imgview.setHeight(200);
 		imgview.setOnClickListener(new OnClickListener()
 		{
 			
@@ -143,7 +147,7 @@ public class AddDrinkToDB extends Fragment
 			{		
 				ImageLoader mLoader = new ImageLoader();
 				imgviewURI = data.getStringExtra("choosenImage");
-				imgview.setImageBitmap(mLoader.decodeFromFile(new File(imgviewURI), 70));
+				imgview.setImageBitmap(mLoader.decodeFromFile(new File(imgviewURI), 100));
 				mLoader = null;
 			}
 		}
@@ -275,7 +279,7 @@ public class AddDrinkToDB extends Fragment
 				boolean fromUser)
 		{
 			seekbarValue = textlabels.get(tag.get()[1]);
-			seekbarValue.setText(String.valueOf(progress) + "ml");
+			seekbarValue.setText(String.valueOf(progress) + " ml");
 		}
 
 		@Override

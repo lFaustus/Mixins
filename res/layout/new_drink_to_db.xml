@@ -28,7 +28,8 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@null"
             />
 
         <RelativeLayout
@@ -138,7 +139,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:text="Seekbar Value 1" />
+                android:text="0 ml" />
              
              
              <TextView
@@ -171,7 +172,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:text="Seekbar Value 2" />
+                android:text="0 ml" />
              
              <TextView
                 android:id="@+id/ingredient3"
@@ -202,7 +203,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:text="SeekBar Value 3" />
+                android:text="0 ml" />
              
              <TextView
                 android:id="@+id/ingredient4"
@@ -233,7 +234,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:text="SeekBar Value 4" />
+                android:text="0 ml" />
              
              <TextView
                 android:id="@+id/ingredient5"
@@ -264,7 +265,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:text="SeekBar Value 5" />
+                android:text="0 ml" />
              
              <TextView
                 android:id="@+id/ingredient6"
@@ -295,7 +296,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:text="SeekBar Value 6" />
+                android:text="0 ml" />
               
               <Button
                   android:id="@+id/addDBButton"

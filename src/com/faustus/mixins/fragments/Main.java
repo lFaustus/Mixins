@@ -20,13 +20,13 @@ import android.widget.RelativeLayout;
 import com.bulletnoid.android.widget.StaggeredGridView.StaggeredGridView;
 import com.bulletnoid.android.widget.StaggeredGridView.StaggeredGridView.OnLoadmoreListener;
 import com.bulletnoid.android.widget.StaggeredGridView.StaggeredGridView.OnScrollListener;
-import com.faustus.glassofgod.navigationdrawer.NavDrawerListAdapter;
 import com.faustus.mixins.R;
 import com.faustus.mixins.STGVImageView;
 import com.faustus.mixins.myInterface.FlipOnSelectedItemListener;
 import com.faustus.mixins.database.DataAdapter;
 import com.faustus.mixins.database.DataSet;
 import com.faustus.mixins.database.LiquorList;
+import com.faustus.navigationdrawer.NavDrawerListAdapter;
 
 public class Main extends Fragment implements OnLoadmoreListener
 {

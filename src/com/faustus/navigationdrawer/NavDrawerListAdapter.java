@@ -1,4 +1,4 @@
-package com.faustus.glassofgod.navigationdrawer;
+package com.faustus.navigationdrawer;
 
 import java.util.ArrayList;
 
