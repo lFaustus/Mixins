@@ -128,9 +128,9 @@ public class Main extends Fragment implements OnLoadmoreListener
 		/*
 		 * sets loading-indertiminate when loading more items
 		 */
-		/*View footerView = LayoutInflater.from(activity).inflate(
+		View footerView = LayoutInflater.from(getActivity()).inflate(
 				R.layout.layout_loading_footer, null);
-		stgv.setFooterView(footerView);*/
+		stgv.setFooterView(footerView);
 
 		/*
 		 * sets the adapter
@@ -340,9 +340,9 @@ public class Main extends Fragment implements OnLoadmoreListener
 				WeakReference<RelativeLayout> rl = new WeakReference<RelativeLayout>((RelativeLayout) view);
 				WeakReference<STGVImageView> img = new WeakReference<STGVImageView>((STGVImageView) rl.get().findViewById(R.id.img_content));
 				WeakReference<LiquorList> liq = new WeakReference<LiquorList>((LiquorList) img.get().getTag());
-				mAdapter.clearLiquorList();
-				mAdapter.LoadItems();
-				mAdapter.notifyDataSetChanged();
+				//mAdapter.clearLiquorList();
+				//mAdapter.LoadItems();
+				//mAdapter.notifyDataSetChanged();
 				FlipOnSelect.onFlipSelectedItem(liq.get(),"Info",
 						getFragmentManager().getBackStackEntryCount() > 0);
 				

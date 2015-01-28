@@ -154,10 +154,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 			Info infofrag = new Info((LiquorList)obj);
 			getFragmentManager()
 					.beginTransaction()
-					.setCustomAnimations(R.animator.card_flip_right_in,
-							R.animator.card_flip_right_out,
-							R.animator.card_flip_left_in,
-							R.animator.card_flip_left_out)
+					.setCustomAnimations(R.animator.fade_right_in,
+							R.animator.fade_right_out,
+							R.animator.fade_left_in,
+							R.animator.fade_left_out)
 					.replace(R.id.rootview, infofrag, "InfoFrag")
 					.addToBackStack(null).commit();
 
@@ -168,10 +168,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 			AddDrinkToDB newDrink = new AddDrinkToDB();
 			newDrink.setDataAdapter((DataAdapter)obj);
 			getFragmentManager().beginTransaction()
-			.setCustomAnimations(R.animator.card_flip_right_in,
-			R.animator.card_flip_right_out,
-			R.animator.card_flip_left_in,
-			R.animator.card_flip_left_out)
+			.setCustomAnimations(R.animator.fade_right_in,
+			R.animator.fade_right_out,
+			R.animator.fade_left_in,
+			R.animator.fade_left_out)
 			.replace(R.id.rootview, newDrink)
 			.addToBackStack(null).commit();
 		}
