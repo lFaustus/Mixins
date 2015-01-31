@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -212,6 +213,7 @@ public class AddDrinkToDB extends Fragment
 				try
 				{
 					seekbarValue = (TextView)getView().findViewById(f.getInt(f.getName()));
+					//TODO
 					textlabels.put(f.getName(),seekbarValue);
 				} 
 				catch (IllegalAccessException e)
@@ -295,12 +297,7 @@ public class AddDrinkToDB extends Fragment
 				boolean fromUser)
 		{
 			seekbarValue = textlabels.get(tag.get()[1]);
-			
 			seekbarValue.setText(String.valueOf(progress) + " ml");
-			//RelativeLayout.LayoutParams layoutparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-			//layoutparams.leftMargin = 500;
-			//seekbarValue.setPadding(2000, 2000, 2000, 2000);
-			//seekbarValue.setLayoutParams(layoutparams);
 			
 		}
 
@@ -314,12 +311,6 @@ public class AddDrinkToDB extends Fragment
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar)
 		{
-			
-			/*if(!order.contains(tag.get()[0]) && seekBar.getProgress() != 0)
-				order.add(tag.get()[0]);
-			
-			else if(order.contains(tag.get()[0]) && seekBar.getProgress() == 0)
-					order.remove(tag.get()[0]);*/
 			if(!order.containsKey(tag.get()[0]) && seekBar.getProgress() != 0)
 			{
 				order.put(tag.get()[0], tag.get()[2]);
@@ -327,13 +318,18 @@ public class AddDrinkToDB extends Fragment
 				System.out.println(Character.toChars(seekBar.getProgress()+48));
 			}
 				
-			else if(order.containsKey(tag.get()[0]) && seekBar.getProgress() == 0)
+			else if(order.containsKey(tag.get()[0]) && seekBar.getProgress() >= 0)
 			{
-				order.remove(tag.get()[0]);
-				order.remove(tag.get()[0]+ " measurement");
+				if(seekBar.getProgress()  == 0) {
+					order.remove(tag.get()[0]);
+					order.remove(tag.get()[0]+ " measurement");
+				}
+				else  {
+					order.remove(tag.get()[0]+ " measurement");
+					order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
+				}
 			}
-				
-			
+			//Log.i("values",order.values()+"");
 			JSONLiquorOrder = new JSONArray(order.values());
 			//System.out.println(String.valueOf(order.containsKey(tag.get()[0]))+" " + order.size()+"");
 			
@@ -353,8 +349,11 @@ public class AddDrinkToDB extends Fragment
 				int progress, boolean fromUser)
 		{
 			seekbarValue = textlabels.get(tag.get()[1]);
-			seekbarValue.setText(String.valueOf(progress) + " ml");
-			
+			seekbarValue.setPadding(200, 0, 0, 0);
+			if(progress == 0)
+				seekbarValue.setText(tag.get()[0]);
+			else
+				seekbarValue.setText(String.valueOf(progress) + " ml");
 		}
 		
 		@Override
@@ -374,18 +373,21 @@ public class AddDrinkToDB extends Fragment
 				System.out.println(Character.toChars(seekBar.getProgress()+48));
 			}
 				
-			else if(order.containsKey(tag.get()[0]) && seekBar.getProgress() == 0)
+			else if(order.containsKey(tag.get()[0]) && seekBar.getProgress() >= 0)
 			{
-				order.remove(tag.get()[0]);
-				order.remove(tag.get()[0]+ " measurement");
+				if(seekBar.getProgress()  == 0) {
+					order.remove(tag.get()[0]);
+					order.remove(tag.get()[0]+ " measurement");
+				}
+				else  {
+					order.remove(tag.get()[0]+ " measurement");
+					order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
+				}
 			}
 				
-			
+			//Log.i("values",order.values()+"");
 			JSONLiquorOrder = new JSONArray(order.values());
 		}
-
-		
-		
 	}
 	
 	/*
