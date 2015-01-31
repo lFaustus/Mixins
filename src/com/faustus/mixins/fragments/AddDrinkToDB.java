@@ -25,13 +25,15 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.faustus.mixins.R;
 import com.faustus.mixins.STGVImageView;
+import com.faustus.mixins.circularseekbar.CircularSeekBar;
+import com.faustus.mixins.circularseekbar.CircularSeekBar.OnCircularSeekBarChangeListener;
 import com.faustus.mixins.database.DBAdapter;
 import com.faustus.mixins.database.DataAdapter;
 import com.faustus.mixins.filechooser.FileChooser;
@@ -40,9 +42,11 @@ import com.maurycyw.lazylist.staggeredgridviewlib.loader.ImageLoader;
 public class AddDrinkToDB extends Fragment
 {
 	private SeekBar seekbar;
+	private CircularSeekBar cSeekbar;
 	private TextView seekbarValue;
 	private TextView label;
 	private Map<String, SeekBar> seekbars = Collections.synchronizedMap(new HashMap<String, SeekBar>());
+	private Map<String, CircularSeekBar> cSeekbars = Collections.synchronizedMap(new HashMap<String, CircularSeekBar>());
 	private Map<String, TextView> textlabels = Collections.synchronizedMap(new HashMap<String, TextView>());
 	//private ArrayList<String> order = new ArrayList<String>();
 	private Map<String,String> order = Collections.synchronizedMap(new LinkedHashMap<String, String>());
@@ -60,8 +64,10 @@ public class AddDrinkToDB extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
-		
-		return inflater.inflate(R.layout.new_drink_to_db, container, false);
+		if((getResources().getDisplayMetrics().widthPixels <= 800 || getResources().getDisplayMetrics().widthPixels <= 480) 
+				&& (getResources().getDisplayMetrics().heightPixels <= 480 || getResources().getDisplayMetrics().heightPixels <= 800))
+			return inflater.inflate(R.layout.new_drink_to_db, container, false);
+		return inflater.inflate(R.layout.new_drink_to_db_large, container, false);
 	}
 	
 	public WeakReference<DataAdapter> getmAdapter()
@@ -80,6 +86,7 @@ public class AddDrinkToDB extends Fragment
 	{
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
+		
 		imgview = (STGVImageView)getView().findViewById(R.id.img_wine);
 		imgview.enableCustomImageViewSize(true);
 		imgview.setWidth(200);
@@ -178,6 +185,14 @@ public class AddDrinkToDB extends Fragment
 						seekbars.put(ingredients[counter-1], seekbar);
 						counter ++;
 					}
+				   if(getView().findViewById(f.getInt(f.getName())) instanceof CircularSeekBar)
+					{
+						cSeekbar = (CircularSeekBar)getView().findViewById(f.getInt(f.getName()));
+						cSeekbar.setTag(new String[]{ingredients[counter-1], "seekBarValue"+counter, String.valueOf(counter)});
+						cSeekbar.setOnSeekBarChangeListener(new CircularSeekbarProgressListener());
+						cSeekbars.put(ingredients[counter-1], cSeekbar);
+						counter ++;
+					}
 					
 					
 				}
@@ -190,6 +205,7 @@ public class AddDrinkToDB extends Fragment
 					e.printStackTrace();
 				}
 			}
+			
 			
 			if(f.getName().startsWith("seekBarValue"))
 			{
@@ -279,7 +295,13 @@ public class AddDrinkToDB extends Fragment
 				boolean fromUser)
 		{
 			seekbarValue = textlabels.get(tag.get()[1]);
+			
 			seekbarValue.setText(String.valueOf(progress) + " ml");
+			//RelativeLayout.LayoutParams layoutparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+			//layoutparams.leftMargin = 500;
+			//seekbarValue.setPadding(2000, 2000, 2000, 2000);
+			//seekbarValue.setLayoutParams(layoutparams);
+			
 		}
 
 		@Override
@@ -316,6 +338,53 @@ public class AddDrinkToDB extends Fragment
 			//System.out.println(String.valueOf(order.containsKey(tag.get()[0]))+" " + order.size()+"");
 			
 		}
+		
+	}
+	
+	/*
+	 * Circular Seekbar Listener
+	 */
+	
+	private class CircularSeekbarProgressListener implements OnCircularSeekBarChangeListener
+	{
+
+		@Override
+		public void onProgressChanged(CircularSeekBar circularSeekBar,
+				int progress, boolean fromUser)
+		{
+			seekbarValue = textlabels.get(tag.get()[1]);
+			seekbarValue.setText(String.valueOf(progress) + " ml");
+			
+		}
+		
+		@Override
+		public void onStartTrackingTouch(CircularSeekBar seekBar)
+		{
+			tag = new WeakReference<String[]>((String[]) seekBar.getTag());
+		}
+
+		@Override
+		public void onStopTrackingTouch(CircularSeekBar seekBar)
+		{
+			
+			if(!order.containsKey(tag.get()[0]) && seekBar.getProgress() != 0)
+			{
+				order.put(tag.get()[0], tag.get()[2]);
+				order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
+				System.out.println(Character.toChars(seekBar.getProgress()+48));
+			}
+				
+			else if(order.containsKey(tag.get()[0]) && seekBar.getProgress() == 0)
+			{
+				order.remove(tag.get()[0]);
+				order.remove(tag.get()[0]+ " measurement");
+			}
+				
+			
+			JSONLiquorOrder = new JSONArray(order.values());
+		}
+
+		
 		
 	}
 	

@@ -100,6 +100,7 @@ public class Main extends Fragment implements OnLoadmoreListener
 		mDrawerLayout = (DrawerLayout) getView().findViewById(R.id.drawer_layout);
 		slideDrawer = (ListView) getView().findViewById(R.id.list_slidermenu);
 		slideDrawer.setAdapter(mNavAdapter);
+		slideDrawer.setDivider(null);
 		slideDrawer.setOnItemClickListener(new SlideMenuClickListener());
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
@@ -201,11 +202,33 @@ public class Main extends Fragment implements OnLoadmoreListener
 				switch(DRAWER_ITEM_CLICKED)
 				{
 					case 0:
+						
 						stgv.setSelectionToTop();
 						FlipOnSelect.onFlipSelectedItem(mAdapter,"AddNewDrink",
 								getFragmentManager().getBackStackEntryCount() > 0);
 						break;
+						
 					case 1:
+						
+						if(mAdapter.isDeleteMode())
+							mAdapter.setDeleteMode(false);
+						else
+							mAdapter.setDeleteMode(true);
+						
+						for(int i=0;i<stgv.getChildCount();i++)
+						{
+								if(stgv.getChildAt(i) instanceof RelativeLayout) 
+								{
+									WeakReference<RelativeLayout> rl = new WeakReference<RelativeLayout>((RelativeLayout) stgv.getChildAt(i));
+									if(rl.get().findViewWithTag("cbox") !=null)
+									{
+										if(mAdapter.isDeleteMode())
+											rl.get().findViewWithTag("cbox").setVisibility(View.VISIBLE);
+										else
+											rl.get().findViewWithTag("cbox").setVisibility(View.INVISIBLE);
+									}
+								}
+						}
 						break;
 				}
 				

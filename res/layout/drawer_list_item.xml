@@ -15,7 +15,7 @@
         android:src="@drawable/ic_home"
         android:layout_centerVertical="true" />
 
-    <TextView
+    <!-- TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -33,6 +33,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
-        android:textColor="@color/counter_text_color"/>
+        android:textColor="@color/counter_text_color"/-->
 
 </RelativeLayout>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/info_bg"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    xmlns:app="http://schemas.android.com/apk/res/com.faustus.mixins"
+     >
+
+    <RelativeLayout
+        android:layout_width="500dp"
+        android:layout_height="match_parent" 
+        android:padding="@dimen/padding"
+        android:layout_weight="1"
+        >
+
+        <com.faustus.mixins.STGVImageView
+            android:id="@+id/img_wine"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@null"
+            />
+
+        <RelativeLayout
+            android:id="@+id/relative_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/img_wine"
+            
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/label_liquor_name"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:text="Add Drink Name"
+                android:clickable="true"
+                android:background="@drawable/gradientbg"
+               	/>
+        </RelativeLayout>
+        
+        <View
+	       android:id="@+id/separator_1"
+	       android:layout_width="match_parent"
+	       android:layout_height="1dp"
+	       android:layout_gravity="left"
+	       android:layout_below="@+id/relative_1"
+	       
+	       android:background="@android:color/darker_gray" />
+        
+        <TextView
+                android:id="@+id/label_liquor_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:text="Add Drink Description"
+                android:layout_below="@+id/separator_1" 
+                android:paddingTop="@dimen/activity_vertical_margin"/>
+        
+         <View
+                android:id="@+id/separator_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="left"
+                android:background="@android:color/darker_gray"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:layout_below="@+id/label_liquor_description" />
+         
+          <Button
+                  android:id="@+id/addDBButton"
+                  style="@style/button_style"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="bottom|center"
+                  android:layout_marginTop="@dimen/activity_vertical_margin"
+                  android:layout_marginBottom="20dp"
+                  android:layout_below="@+id/separator_2"
+                  android:background="@drawable/green_button"
+                  android:text="Add to Menu" />
+  	   </RelativeLayout>
+        
+   	
+
+       <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:paddingLeft="@dimen/padding"
+            android:paddingRight="@dimen/padding"
+            android:paddingBottom="@dimen/padding"
+            >
+          
+          <FrameLayout 
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+            
+          <com.faustus.mixins.circularseekbar.CircularSeekBar
+               android:id="@+id/seekBar1"
+               android:layout_width="wrap_content"
+			   android:layout_height="wrap_content"
+               app:progress="25"
+               app:max="100"
+               app:pointer_alpha_ontouch="100"
+			   app:pointer_color="#000000"
+			   app:pointer_halo_color="#FFFFFF"
+			   
+              />	
+              
+          <TextView
+                android:id="@+id/seekBarValue1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:text="Ingredient 1" 
+                android:layout_gravity="center"/>
+          </FrameLayout>
+          
+          
+          <FrameLayout 
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+          
+          <com.faustus.mixins.circularseekbar.CircularSeekBar
+               android:id="@+id/seekBar2"
+               android:layout_width="wrap_content"
+			   android:layout_height="wrap_content"
+               app:progress="25"
+               app:max="100"
+               app:pointer_alpha_ontouch="100"
+			   app:pointer_color="#000000"
+			   app:pointer_halo_color="#FFFFFF"
+              />	
+              
+          <TextView
+                android:id="@+id/seekBarValue2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:text="Ingredient 2" 
+                android:layout_gravity="center"/>
+          </FrameLayout>
+          
+          <FrameLayout 
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+          
+          <com.faustus.mixins.circularseekbar.CircularSeekBar
+               android:id="@+id/seekBar3"
+               android:layout_width="wrap_content"
+			   android:layout_height="wrap_content"
+               app:progress="25"
+               app:max="100"
+               app:pointer_alpha_ontouch="100"
+			   app:pointer_color="#000000"
+			   app:pointer_halo_color="#FFFFFF"
+			   
+              />	
+              
+          <TextView
+                android:id="@+id/seekBarValue3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:text="Ingredient 3" 
+                android:layout_gravity="center"/>
+          </FrameLayout>
+
+
+        </LinearLayout>
+</LinearLayout>
+

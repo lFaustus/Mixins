@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text=" "
             android:tag="cbox" 
-            android:visibility="gone"
+            android:visibility="invisible"
             android:focusable="false"
             android:focusableInTouchMode="false"
             />

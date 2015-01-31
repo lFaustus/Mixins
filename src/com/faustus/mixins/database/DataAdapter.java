@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.bulletnoid.android.widget.StaggeredGridView.StaggeredGridView;
@@ -29,6 +30,7 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 	private ArrayList<LiquorList> pictures;
 	private final int SCROLL_STATE_ONLOAD = -1;
 	private int SCROLL_STATE = -1;
+	private boolean DeleteMode = false;
 
 	public DataAdapter(Context context)
 	{
@@ -66,6 +68,16 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 	
 	
 	
+	public boolean isDeleteMode()
+	{
+		return DeleteMode;
+	}
+
+	public void setDeleteMode(boolean deleteMode)
+	{
+		DeleteMode = deleteMode;
+	}
+
 	public int getSCROLL_STATE()
 	{
 		return SCROLL_STATE;
@@ -127,6 +139,12 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		{
 			viewholder = (ViewHolder) view.getTag();
 		}
+		
+		if(isDeleteMode())
+			viewholder.checkbox.setVisibility(View.VISIBLE);
+		else
+			viewholder.checkbox.setVisibility(View.INVISIBLE);
+		
 		viewholder.img_content.setImageBitmap(null);
 		viewholder.img_content.setTag(liq);
 		viewholder.img_label.setText(liq.getName());
@@ -140,6 +158,7 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		STGVImageView img_content;
 		TextView img_label;
 		Typeface customFont;
+		CheckBox checkbox;
 
 		public ViewHolder(View v)
 		{
@@ -147,6 +166,7 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 			img_content = (STGVImageView) v.findViewById(R.id.img_content);
 			img_label = (TextView) v.findViewById(R.id.img_label);
 			img_label.setTypeface(customFont);
+			checkbox = (CheckBox)v.findViewById(R.id.checkbox);
 		}
 
 	}
