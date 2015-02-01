@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,8 +26,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -59,12 +58,14 @@ public class AddDrinkToDB extends Fragment
 	private JSONObject JSONLiquorAttrib;
 	private JSONArray JSONLiquorOrder;
 	private WeakReference<String[]> tag;
+	private Typeface customFont;
 	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
+		customFont = Typeface.createFromAsset(getResources().getAssets(), "danielabold.ttf");
 		if((getResources().getDisplayMetrics().widthPixels <= 800 || getResources().getDisplayMetrics().widthPixels <= 480) 
 				&& (getResources().getDisplayMetrics().heightPixels <= 480 || getResources().getDisplayMetrics().heightPixels <= 800))
 			return inflater.inflate(R.layout.new_drink_to_db, container, false);
@@ -92,6 +93,9 @@ public class AddDrinkToDB extends Fragment
 		imgview.enableCustomImageViewSize(true);
 		imgview.setWidth(200);
 		imgview.setHeight(200);
+		
+		imgview.setImageBitmap(new ImageLoader(getActivity().getApplicationContext())
+															.DecodeFromResource(R.drawable.winemartini,300));
 		imgview.setOnClickListener(new OnClickListener()
 		{
 			
@@ -103,7 +107,7 @@ public class AddDrinkToDB extends Fragment
 			}
 		});
 		button = (Button)getView().findViewById(R.id.addDBButton);
-		
+		button.setTypeface(customFont);
 		initializeSeekBars();
 		initializeLabels();
 		button.setOnClickListener(new OnClickListener()
@@ -123,7 +127,12 @@ public class AddDrinkToDB extends Fragment
 					for(Map.Entry<String, String> map: order.entrySet())
 					{
 						if(!map.getKey().contains(" measurement"))
-							JSONLiquorAttrib.put(map.getKey(),seekbars.get(map.getKey()).getProgress());
+						{
+							if(seekbars.get(map.getKey()) != null)
+								JSONLiquorAttrib.put(map.getKey(),seekbars.get(map.getKey()).getProgress());
+							else
+								JSONLiquorAttrib.put(map.getKey(),cSeekbars.get(map.getKey()).getProgress());
+						}
 					}
 					
 					JSONLiquorAttrib.put("Order", JSONLiquorOrder);
@@ -213,8 +222,16 @@ public class AddDrinkToDB extends Fragment
 				try
 				{
 					seekbarValue = (TextView)getView().findViewById(f.getInt(f.getName()));
-					//TODO
+					if(seekbarValue.getTag().toString().contains("circular"))
+					{
+						if(seekbarValue.getTag().equals("circular1"))
+							counter = 1;
+						
+						seekbarValue.setText(ingredients[counter-1]);
+					}
+					seekbarValue.setTypeface(customFont);
 					textlabels.put(f.getName(),seekbarValue);
+					counter++;
 				} 
 				catch (IllegalAccessException e)
 				{
@@ -244,6 +261,7 @@ public class AddDrinkToDB extends Fragment
 						label = (TextView) getView().findViewById(
 								f.getInt(f.getName()));
 						label.setText(ingredients[counter]);
+						label.setTypeface(customFont);
 						textlabels.put(f.getName(), label);
 						counter ++;
 					}
@@ -269,6 +287,7 @@ public class AddDrinkToDB extends Fragment
 						label = (TextView) getView().findViewById(
 								f.getInt(f.getName()));
 						label.setOnClickListener(new OnClickTextViewListener());
+						label.setTypeface(customFont);
 						textlabels.put(String.valueOf(f.getInt(f.getName())), label);
 					}
 				} 
@@ -282,6 +301,7 @@ public class AddDrinkToDB extends Fragment
 				}
 				
 			}
+			
 		}
 	}
 	
@@ -349,7 +369,6 @@ public class AddDrinkToDB extends Fragment
 				int progress, boolean fromUser)
 		{
 			seekbarValue = textlabels.get(tag.get()[1]);
-			seekbarValue.setPadding(200, 0, 0, 0);
 			if(progress == 0)
 				seekbarValue.setText(tag.get()[0]);
 			else
@@ -370,7 +389,7 @@ public class AddDrinkToDB extends Fragment
 			{
 				order.put(tag.get()[0], tag.get()[2]);
 				order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
-				System.out.println(Character.toChars(seekBar.getProgress()+48));
+				//System.out.println(Character.toChars(seekBar.getProgress()+48));
 			}
 				
 			else if(order.containsKey(tag.get()[0]) && seekBar.getProgress() >= 0)
@@ -385,7 +404,7 @@ public class AddDrinkToDB extends Fragment
 				}
 			}
 				
-			//Log.i("values",order.values()+"");
+			Log.i("values",order.values()+"");
 			JSONLiquorOrder = new JSONArray(order.values());
 		}
 	}

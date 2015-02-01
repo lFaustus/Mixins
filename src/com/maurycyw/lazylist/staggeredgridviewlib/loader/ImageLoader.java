@@ -15,9 +15,13 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import com.faustus.mixins.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
@@ -36,11 +40,12 @@ public class ImageLoader {
     private Map<ImageView, String> imageViews=Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService;
     Handler handler=new Handler();//handler to display images in UI thread
-    
+    private Context context;
     
     public ImageLoader(Context context){
         fileCache=new FileCache(context);
         executorService=Executors.newFixedThreadPool(5);
+        this.context = context;
     }
     
     public ImageLoader(){}
@@ -373,6 +378,28 @@ public class ImageLoader {
              e.printStackTrace();
          }
          return null;
+    }
+    
+    public Bitmap DecodeFromResource(int resID,int sampleSize)
+    {
+    	try
+    	{
+    		File f=new File(Environment.getExternalStorageDirectory() + File.separator + resID);
+		    InputStream inputStream = context.getResources().openRawResource(resID);
+		    OutputStream out=new FileOutputStream(f);
+		    byte[] buf=new byte[1024];
+		    int len;
+		    while((len=inputStream.read(buf))>0)
+		    	out.write(buf,0,len);
+		    out.close();
+		    inputStream.close();
+		    return this.decodeFromFile(f, sampleSize);
+    	}
+    	catch(IOException e)
+    	{
+    		Log.e("error",e.toString());
+    	}
+    	return null;
     }
     
     //Task for the queue

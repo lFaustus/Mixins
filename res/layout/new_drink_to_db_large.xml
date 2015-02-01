@@ -96,10 +96,11 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp" >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="300dp"
                 android:layout_weight="1"
                 android:baselineAligned="false"
@@ -109,26 +110,27 @@
                 android:paddingRight="@dimen/padding" >
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <com.faustus.mixins.circularseekbar.CircularSeekBar
                         android:id="@+id/seekBar1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         app:max="100"
                         app:pointer_alpha_ontouch="100"
-                        app:pointer_color="#000000"
-                        app:pointer_halo_color="#FFFFFF"
+                        app:pointer_color="#0174DF"
+                        app:pointer_halo_color="#880174DF"
                         />
 
                     <TextView
                         android:id="@+id/seekBarValue1"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingLeft="50dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:tag="circular1"
                         android:text="Ingredient 1"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
@@ -136,53 +138,53 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <com.faustus.mixins.circularseekbar.CircularSeekBar
                         android:id="@+id/seekBar2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         app:max="100"
                         app:pointer_alpha_ontouch="100"
-                        app:pointer_color="#000000"
-                        app:pointer_halo_color="#FFFFFF"
-                        />
+                        app:pointer_color="#0174DF"
+                        app:pointer_halo_color="#880174DF" />
 
                     <TextView
                         android:id="@+id/seekBarValue2"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:tag="circular2"
                         android:text="Ingredient 2"
-                        android:paddingLeft="50dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
                         android:textSize="30sp" />
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <com.faustus.mixins.circularseekbar.CircularSeekBar
                         android:id="@+id/seekBar3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         app:max="100"
                         app:pointer_alpha_ontouch="100"
-                        app:pointer_color="#000000"
-                        app:pointer_halo_color="#FFFFFF"
-                        app:progress="25" />
+                        app:pointer_color="#0174DF"
+                        app:pointer_halo_color="#880174DF" />
 
                     <TextView
                         android:id="@+id/seekBarValue3"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingLeft="50dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:tag="circular3"
                         android:text="Ingredient 3"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
@@ -196,91 +198,91 @@
             android:layout_height="wrap_content" >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="300dp"
                 android:layout_weight="1"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/padding"
                 android:paddingLeft="@dimen/padding"
-                android:paddingRight="@dimen/padding"
-                android:baselineAligned="false" >
+                android:paddingRight="@dimen/padding" >
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <com.faustus.mixins.circularseekbar.CircularSeekBar
                         android:id="@+id/seekBar4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         app:max="100"
                         app:pointer_alpha_ontouch="100"
-                        app:pointer_color="#000000"
-                        app:pointer_halo_color="#FFFFFF"
-                         />
+                        app:pointer_color="#0174DF"
+                        app:pointer_halo_color="#880174DF" />
 
                     <TextView
                         android:id="@+id/seekBarValue4"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:tag="circular4"
                         android:text="Ingredient 4"
-                        android:paddingLeft="50dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
                         android:textSize="30sp" />
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <com.faustus.mixins.circularseekbar.CircularSeekBar
                         android:id="@+id/seekBar5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         app:max="100"
                         app:pointer_alpha_ontouch="100"
-                        app:pointer_color="#000000"
-                        app:pointer_halo_color="#FFFFFF"
-                        />
+                        app:pointer_color="#0174DF"
+                        app:pointer_halo_color="#880174DF" />
 
                     <TextView
                         android:id="@+id/seekBarValue5"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-						android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:tag="circular5"
                         android:text="Ingredient 5"
-                        android:paddingLeft="50dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
                         android:textSize="30sp" />
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" >
 
                     <com.faustus.mixins.circularseekbar.CircularSeekBar
                         android:id="@+id/seekBar6"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         app:max="100"
                         app:pointer_alpha_ontouch="100"
-                        app:pointer_color="#000000"
-                        app:pointer_halo_color="#FFFFFF"
-                        />
+                        app:pointer_color="#0174DF"
+                        app:pointer_halo_color="#880174DF" />
 
                     <TextView
                         android:id="@+id/seekBarValue6"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:tag="circular6"
                         android:text="Ingredient 6"
-                        android:paddingLeft="50dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF"
                         android:textSize="30sp" />

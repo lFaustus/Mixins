@@ -84,30 +84,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 			setContentView(R.layout.splashscreen);
 			txt = (TextView) findViewById(R.id.loadingtext);
 			relativelayout = (RelativeLayout)findViewById(R.id.splash_root);
-			
-			try 
-		    { 
-			    File f=new File(Environment.getExternalStorageDirectory() + File.separator + "tempfile");
-			    InputStream inputStream = getResources().openRawResource(R.drawable.splash2);
-			    OutputStream out=new FileOutputStream(f);
-			    byte[] buf=new byte[1024];
-			    int len;
-			    while((len=inputStream.read(buf))>0)
-			    	out.write(buf,0,len);
-			    out.close();
-			    inputStream.close();
-			    bitmap = new ImageLoader().decodeFromFile(f, 100);
-			    Drawable drawable = new BitmapDrawable(bitmap);
-			    relativelayout.setBackgroundDrawable(drawable);
-			    //f.delete();
-			    buf = null;
-			    inputStream = null;
-			    out = null;
-			    drawable = null;
-		    } 
-		    catch (IOException e){
-		    	Log.e("error",e.toString());
-		    }
+			bitmap = new ImageLoader(getApplicationContext()).DecodeFromResource(R.drawable.splash2, 100);
+			Drawable drawable = new BitmapDrawable(bitmap);
+		    relativelayout.setBackgroundDrawable(drawable);
 		     
 			
 			tf = Typeface.createFromAsset(getAssets(), "segoeui.ttf");
