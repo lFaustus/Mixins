@@ -222,13 +222,16 @@ public class AddDrinkToDB extends Fragment
 				try
 				{
 					seekbarValue = (TextView)getView().findViewById(f.getInt(f.getName()));
-					if(seekbarValue.getTag().toString().contains("circular"))
-					{
-						if(seekbarValue.getTag().equals("circular1"))
-							counter = 1;
-						
-						seekbarValue.setText(ingredients[counter-1]);
+					if(seekbarValue.getTag() != null){
+						if(seekbarValue.getTag().toString().contains("circular"))
+						{
+							if(seekbarValue.getTag().equals("circular1"))
+								counter = 1;
+							
+							seekbarValue.setText(ingredients[counter-1]);
+						}
 					}
+					
 					seekbarValue.setTypeface(customFont);
 					textlabels.put(f.getName(),seekbarValue);
 					counter++;

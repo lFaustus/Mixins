@@ -35,9 +35,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@id/img_wine"
-            android:background="@drawable/gradientbg"
             android:orientation="vertical" >
 
             <TextView
@@ -52,7 +51,8 @@
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
                 android:text="Add Drink Name"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:background="@drawable/gradientbg"/>
         </RelativeLayout>
     </RelativeLayout>
         
@@ -127,7 +127,7 @@
                  android:id="@+id/seekBar1"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:max="50"/>
+                 android:max="100"/>
              
               <TextView
                 android:id="@+id/seekBarValue1"
@@ -160,7 +160,7 @@
                  android:id="@+id/seekBar2"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"     
-                 android:max="50"/>
+                 android:max="100"/>
              
               <TextView
                 android:id="@+id/seekBarValue2"
@@ -191,7 +191,7 @@
                  android:id="@+id/seekBar3"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:max="50"/>
+                 android:max="100"/>
              
               <TextView
                 android:id="@+id/seekBarValue3"
@@ -222,7 +222,7 @@
                  android:id="@+id/seekBar4"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:max="50"/>
+                 android:max="100"/>
              
               <TextView
                 android:id="@+id/seekBarValue4"
@@ -253,7 +253,7 @@
                  android:id="@+id/seekBar5"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:max="50"/>
+                 android:max="100"/>
              
               <TextView
                 android:id="@+id/seekBarValue5"
@@ -284,7 +284,7 @@
                  android:id="@+id/seekBar6"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:max="50"/>
+                 android:max="100"/>
              
               <TextView
                 android:id="@+id/seekBarValue6"
