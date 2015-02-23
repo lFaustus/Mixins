@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -149,7 +150,11 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		viewholder.img_content.setTag(liq);
 		viewholder.img_label.setText(liq.getName());
 		if(getSCROLL_STATE() == StaggeredGridView.OnScrollListener.SCROLL_STATE_IDLE || getSCROLL_STATE() == SCROLL_STATE_ONLOAD)
+		{
 			mLoader.DisplayImage(liq.getUrl(), viewholder.img_content,liq.getName());
+			if(((BitmapDrawable)viewholder.img_content.getDrawable()).getBitmap() == null)
+				viewholder.img_content.setImageBitmap(new ImageLoader(context).DecodeFromResource(R.drawable.winemartini, 200));
+		}
 		return view;
 	}
 	

@@ -373,6 +373,7 @@ public class ImageLoader {
              stream2.close();
              return bitmap;
          } catch (FileNotFoundException e) {
+        	 Log.e("Error","error");
          } 
          catch (IOException e) {
              e.printStackTrace();
@@ -494,7 +495,7 @@ public class ImageLoader {
             if(bitmap!=null)
                 photoToLoad.imageView.setImageBitmap(bitmap);
             else
-                photoToLoad.imageView.setImageDrawable(null);
+                photoToLoad.imageView.setImageBitmap(new ImageLoader(context).DecodeFromResource(R.drawable.winemartini, 200));
            
         }
     }

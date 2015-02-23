@@ -3,8 +3,8 @@
     <string name="app_name">Mixins</string>
     <string name="dialog_edittext_preferrence">EditText Preference</string>
     <string-array name="nav_drawer_items">
-        <item ></item>
-        <item ></item>
+        <item >Add Drink To List</item>
+        <item >Mix On The Spot</item>
         <item ></item>
         <item ></item>
         <item ></item>

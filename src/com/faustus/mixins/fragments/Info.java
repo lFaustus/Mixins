@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -107,6 +108,12 @@ public class Info extends Fragment
 		text1 = (TextView)getView().findViewById(R.id.text1);
 		text2 = (TextView)getView().findViewById(R.id.text2);
 		imgview.setImageBitmap(new ImageLoader().decodeFromFile(new File(liquorList.getUrl()), 70));
+		
+		if(((BitmapDrawable)imgview.getDrawable()).getBitmap() == null)
+		{
+			imgview.setImageBitmap(new ImageLoader(getActivity().getApplicationContext()).DecodeFromResource(R.drawable.winemartini, 300));
+		}
+		
 		label.setText(liquorList.getName());
 		extra.setText(liquorList.getName());
 		description.setText(liquorList.getDescription());

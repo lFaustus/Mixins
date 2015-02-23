@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,15 +80,18 @@ public class NavDrawerListAdapter extends BaseAdapter {
 		if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater)
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.drawer_list_item, null);
+            convertView = mInflater.inflate(R.layout.drawer_list_item, parent,false);
         }
          
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
-        //TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
+        TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), "danielabold.ttf");
         //TextView txtCount = (TextView) convertView.findViewById(R.id.counter);
          
-        imgIcon.setImageResource(navDrawerItems.get(position).getIcon());        
-        //txtTitle.setText(navDrawerItems.get(position).getTitle());
+        imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
+        txtTitle.setTypeface(tf);
+        txtTitle.setText(navDrawerItems.get(position).getTitle());
+        
         
         // displaying count
         // check whether it set visible or not

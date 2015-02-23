@@ -51,7 +51,7 @@ public class AddDrinkToDB extends Fragment
 	//private ArrayList<String> order = new ArrayList<String>();
 	private Map<String,String> order = Collections.synchronizedMap(new LinkedHashMap<String, String>());
 	private Button button;
-	private String[] ingredients = new String[]{"Milk","Choco","Vanilla","Caramel","Cheese","Yogurt"};
+	private String[] ingredients = new String[]{"Triple Sec","Vodka","Tequila","Lime Juice","Beer","Orange Juice"};
 	private STGVImageView imgview;
 	private String imgviewURI = "";
 	private WeakReference<DataAdapter> mAdapter;
@@ -231,7 +231,6 @@ public class AddDrinkToDB extends Fragment
 							seekbarValue.setText(ingredients[counter-1]);
 						}
 					}
-					
 					seekbarValue.setTypeface(customFont);
 					textlabels.put(f.getName(),seekbarValue);
 					counter++;
