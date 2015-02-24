@@ -230,6 +230,12 @@ public class Main extends Fragment implements OnLoadmoreListener
 								}
 						}
 						break;
+						
+					case 2:
+						stgv.setSelectionToTop();
+						FlipOnSelect.onFlipSelectedItem(null,"MixOnTheSpot",
+								getFragmentManager().getBackStackEntryCount() > 0);
+						break;
 				}
 				
 				DRAWER_ITEM_CLICKED = -1;

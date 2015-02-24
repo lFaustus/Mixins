@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,11 +20,13 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.faustus.mixins.DispenseTask;
 import com.faustus.mixins.MainActivity;
 import com.faustus.mixins.R;
 import com.faustus.mixins.database.LiquorList;
@@ -42,6 +45,7 @@ public class Info extends Fragment
 	private Typeface daniela,segoe;
 	private Handler handler;
 	private LiquorList liquorList;
+	private InputStream inStream;
 
 	public Info()
 	{
@@ -75,6 +79,7 @@ public class Info extends Fragment
 		//FlipOnSelect = (FlipOnSelectedItemListener) activity;
 		//handler = new Handler((Callback) activity);
 		handler = ((MainActivity)activity).getHandler();
+		inStream = ((MainActivity)activity).getInputStream();
 	}
 
 	@Override
@@ -153,9 +158,15 @@ public class Info extends Fragment
 					}
 					msg.obj = outstream.toByteArray();
 					handler.sendMessage(msg);
+					outstream.close();
+					dataOutstream.close();
 				}
 				catch (JSONException e)
 				{
+					e.printStackTrace();
+				} catch (IOException e)
+				{
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				finally

@@ -41,6 +41,7 @@ import com.faustus.mixins.database.LiquorList;
 import com.faustus.mixins.fragments.AddDrinkToDB;
 import com.faustus.mixins.fragments.Info;
 import com.faustus.mixins.fragments.Main;
+import com.faustus.mixins.fragments.MixOnTheSpot;
 import com.maurycyw.lazylist.staggeredgridviewlib.loader.ImageLoader;
 
 public class MainActivity extends SherlockFragmentActivity implements
@@ -52,11 +53,12 @@ public class MainActivity extends SherlockFragmentActivity implements
 	private static Typeface tf;
 	private static RelativeLayout relativelayout;
 	BluetoothAdapter btAdapter = null;
-	OutputStream outStream = null;
-	BluetoothDevice device = null;
-	BluetoothSocket btSocket = null;
-	SaveBluetoothConfig saveBTconfig = null;
-	Handler handler = new Handler(this);
+	private OutputStream outStream = null;
+	private InputStream inputStream = null;
+	private BluetoothDevice device = null;
+	private BluetoothSocket btSocket = null;
+	private SaveBluetoothConfig saveBTconfig = null;
+	private Handler handler = new Handler(this);
 	Bundle savedInstanceStateBundle = null;
 	Bitmap bitmap = null;
 	//Info infofrag;
@@ -102,6 +104,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		btAdapter = saveBTconfig.getBluetoothAdapter();
 		btSocket = saveBTconfig.getBluetoothSocket();
 		outStream = saveBTconfig.getOutStream();
+		inputStream = saveBTconfig.getInputStream();
 		device = saveBTconfig.getBluetoothDevice();
 		/*if (savedInstanceState == null)
 		{
@@ -154,6 +157,17 @@ public class MainActivity extends SherlockFragmentActivity implements
 			.replace(R.id.rootview, newDrink)
 			.addToBackStack(null).commit();
 		}
+		else if(fragmentName == "MixOnTheSpot")
+		{
+			MixOnTheSpot mots = new MixOnTheSpot();
+			getFragmentManager().beginTransaction()
+			.setCustomAnimations(R.animator.fade_right_in,
+			R.animator.fade_right_out,
+			R.animator.fade_left_in,
+			R.animator.fade_left_out)
+			.replace(R.id.rootview, mots)
+			.addToBackStack(null).commit();
+		}
 				
 	}
 
@@ -195,11 +209,12 @@ public class MainActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onDestroy()
 	{
-		
+		Log.i("null","null");
 		super.onDestroy();
 		flip = null;
 		btAdapter = null;
 		outStream = null;
+		inputStream = null;
 		device = null;
 		btSocket = null;
 		saveBTconfig = null;
@@ -249,12 +264,18 @@ public class MainActivity extends SherlockFragmentActivity implements
 	{
 		return handler;
 	}
-
+	
+	public InputStream getInputStream()
+	{
+		return inputStream;
+	}
+	
 	private void sendData(byte[] msgBuffer)
 	{
 		try
 		{
 			outStream.write(msgBuffer);
+			new DispenseTask(MainActivity.this).execute();
 		} catch (IOException e)
 		{
 			String msg = "In onResume() and an exception occurred during write: "
@@ -376,6 +397,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 					try
 					{
 						outStream = btSocket.getOutputStream();
+						inputStream = btSocket.getInputStream();
 						return true;
 					} 
 					
@@ -433,6 +455,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 				saveBTconfig.saveBluetoothDevice(device);
 				saveBTconfig.saveBluetoothSocket(btSocket);
 				saveBTconfig.saveOutputStream(outStream);
+				saveBTconfig.saveInputStream(inputStream);
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 				setContentView(R.layout.root_view);
 				getFragmentManager().beginTransaction()

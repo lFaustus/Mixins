@@ -1,5 +1,6 @@
 package com.faustus.mixins;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.bluetooth.BluetoothAdapter;
@@ -10,6 +11,7 @@ public class SaveBluetoothConfig
 {
 	private  BluetoothAdapter btAdapter = null;
 	private  OutputStream outStream = null;
+	private  InputStream inputStream = null;
 	private  BluetoothDevice device = null;
 	private  BluetoothSocket btSocket = null;
 	
@@ -23,7 +25,7 @@ public class SaveBluetoothConfig
 		outStream = outputStream;
 	}
 	
-	public  void saveBluetoothDevice(BluetoothDevice BTdevice)
+	public void saveBluetoothDevice(BluetoothDevice BTdevice)
 	{
 		device = BTdevice;
 	}
@@ -33,6 +35,15 @@ public class SaveBluetoothConfig
 		btSocket = BTsocket;
 	}
 
+	public void saveInputStream(InputStream inputStream)
+	{
+		this.inputStream = inputStream;
+	}
+		
+	public InputStream getInputStream()
+	{
+		return inputStream;
+	}
 
 	public  OutputStream getOutStream()
 	{

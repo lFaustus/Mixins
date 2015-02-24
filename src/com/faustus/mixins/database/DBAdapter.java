@@ -13,14 +13,16 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 public class DBAdapter
 {
 
 	DBHelper dbhelper;
-	
+	Context context;
 	public DBAdapter(Context context)
 	{
+		this.context = context;
 		dbhelper = new DBHelper(context);
 	}
 	
@@ -48,6 +50,8 @@ public class DBAdapter
 		db.insert(DBHelper.TABLE_NAME,null, contentValues);
 		db.close();
 		dbhelper.closeDB();
+		Toast.makeText(context, "Drink Added!", Toast.LENGTH_SHORT).show();
+		
 	}
 
 	public ArrayList<String> getAllLiquors()
