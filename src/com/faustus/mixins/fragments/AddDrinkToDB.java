@@ -347,7 +347,7 @@ public class AddDrinkToDB extends Fragment
 					order.remove(tag.get()[0]+ " measurement");
 				}
 				else  {
-					order.remove(tag.get()[0]+ " measurement");
+					//order.remove(tag.get()[0]+ " measurement");
 					order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
 				}
 			}
@@ -401,13 +401,14 @@ public class AddDrinkToDB extends Fragment
 					order.remove(tag.get()[0]+ " measurement");
 				}
 				else  {
-					order.remove(tag.get()[0]+ " measurement");
+					//order.remove(tag.get()[0]+ " measurement");
 					order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
 				}
 			}
-				
+	
 			Log.i("values",order.values()+"");
 			JSONLiquorOrder = new JSONArray(order.values());
+			
 		}
 	}
 	
