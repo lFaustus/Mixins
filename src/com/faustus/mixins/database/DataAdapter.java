@@ -16,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.bulletnoid.android.widget.StaggeredGridView.StaggeredGridView;
 import com.faustus.mixins.R;
 import com.faustus.mixins.STGVImageView;
+import com.faustus.mixins.fragments.Main;
 import com.maurycyw.lazylist.staggeredgridviewlib.loader.ImageLoader;
 
 public class DataAdapter extends BaseAdapter implements Parcelable
@@ -128,13 +130,30 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		//System.out.println("getview:" + position + " " + convertView);
 		View view = convertView;
 		ViewHolder viewholder = null;
-		LiquorList liq= pictures.get(position);
+		final LiquorList liq= pictures.get(position);
+		final int pos = position;
 		
 		if (view == null)
 		{
 			view = LayoutInflater.from(context).inflate(R.layout.cell_stgv,
 					parent, false);
 			viewholder = new ViewHolder(view);
+			viewholder.btn.setOnClickListener(new View.OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					Log.e("delete Test",v.getTag().toString());
+					DBAdapter dbhelper = new DBAdapter(context);
+					dbhelper.deleteData(v.getTag().toString());
+					clearLiquorList();
+					LoadItems();
+					Main.stgv.removeAllViews();
+					notifyDataSetChanged();
+					Main.updateTile().setAdapter(DataAdapter.this);	
+				}
+			});
 			view.setTag(viewholder);
 		} else
 		{
@@ -142,13 +161,14 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		}
 		
 		if(isDeleteMode())
-			viewholder.checkbox.setVisibility(View.VISIBLE);
+			viewholder.btn.setVisibility(View.VISIBLE);
 		else
-			viewholder.checkbox.setVisibility(View.INVISIBLE);
+			viewholder.btn.setVisibility(View.INVISIBLE);
 		
 		viewholder.img_content.setImageBitmap(null);
 		viewholder.img_content.setTag(liq);
 		viewholder.img_label.setText(liq.getName());
+		viewholder.btn.setTag(liq.getName());
 		if(getSCROLL_STATE() == StaggeredGridView.OnScrollListener.SCROLL_STATE_IDLE || getSCROLL_STATE() == SCROLL_STATE_ONLOAD)
 		{
 			mLoader.DisplayImage(liq.getUrl(), viewholder.img_content,liq.getName());
@@ -163,7 +183,7 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 		STGVImageView img_content;
 		TextView img_label;
 		Typeface customFont;
-		CheckBox checkbox;
+		Button btn;
 
 		public ViewHolder(View v)
 		{
@@ -171,7 +191,8 @@ public class DataAdapter extends BaseAdapter implements Parcelable
 			img_content = (STGVImageView) v.findViewById(R.id.img_content);
 			img_label = (TextView) v.findViewById(R.id.img_label);
 			img_label.setTypeface(customFont);
-			checkbox = (CheckBox)v.findViewById(R.id.checkbox);
+			btn = (Button)v.findViewById(R.id.deletebutton);
+			btn.setTypeface(customFont);
 		}
 
 	}

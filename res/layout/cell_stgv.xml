@@ -21,16 +21,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/fmlayout"
         >
-        <CheckBox
-            android:id="@+id/checkbox"
+        <Button
+            android:id="@+id/deletebutton"
  			android:layout_gravity="top|left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" "
-            android:tag="cbox" 
+            android:text="Delete"
+            android:tag="deletebutton" 
             android:visibility="invisible"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:background="@drawable/red_button"
+            style="@style/button_style" 
             />
     </FrameLayout>
     

@@ -31,7 +31,7 @@ import com.faustus.navigationdrawer.NavDrawerListAdapter;
 public class Main extends Fragment implements OnLoadmoreListener
 {
 
-	private StaggeredGridView stgv;
+	public static StaggeredGridView stgv;
 	private DataAdapter mAdapter;
 	private NavDrawerListAdapter mNavAdapter;
 	private FlipOnSelectedItemListener FlipOnSelect;
@@ -43,6 +43,17 @@ public class Main extends Fragment implements OnLoadmoreListener
 	{
 	}
 
+	public static void removeTile(int i)
+	{
+		stgv.removeViewAt(i);
+	}
+	
+	public static StaggeredGridView updateTile()
+	{
+		return stgv;
+		
+	}
+	
 	@Override
 	public void onAttach(Activity activity)
 	{
@@ -215,17 +226,22 @@ public class Main extends Fragment implements OnLoadmoreListener
 						else
 							mAdapter.setDeleteMode(true);
 						
+						stgv.removeAllViews();
+						//stgv.setAdapter(mAdapter);
+						//mAdapter.LoadItems();
+						//mAdapter.notifyDataSetChanged();
+						
 						for(int i=0;i<stgv.getChildCount();i++)
 						{
 								if(stgv.getChildAt(i) instanceof RelativeLayout) 
 								{
 									WeakReference<RelativeLayout> rl = new WeakReference<RelativeLayout>((RelativeLayout) stgv.getChildAt(i));
-									if(rl.get().findViewWithTag("cbox") !=null)
+									if(rl.get().findViewWithTag("deletebutton") !=null)
 									{
 										if(mAdapter.isDeleteMode())
-											rl.get().findViewWithTag("cbox").setVisibility(View.VISIBLE);
+											rl.get().findViewWithTag("deletebutton").setVisibility(View.VISIBLE);
 										else
-											rl.get().findViewWithTag("cbox").setVisibility(View.INVISIBLE);
+											rl.get().findViewWithTag("deletebutton").setVisibility(View.INVISIBLE);
 									}
 								}
 						}

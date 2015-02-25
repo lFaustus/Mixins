@@ -53,6 +53,16 @@ public class DBAdapter
 		Toast.makeText(context, "Drink Added!", Toast.LENGTH_SHORT).show();
 		
 	}
+	
+	public void deleteData(String name)
+	{
+		int i;
+		SQLiteDatabase db = dbhelper.openDB();
+		i = db.delete(DBHelper.TABLE_NAME, "JSONLiquour like '%"+ name +"%';", null);
+		db.close();
+		dbhelper.close();
+		Toast.makeText(context, "Liquor Deleted!" + String.valueOf(i), Toast.LENGTH_SHORT).show();
+	}
 
 	public ArrayList<String> getAllLiquors()
 	{

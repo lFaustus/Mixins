@@ -244,7 +244,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			while (in.available() > 0) {
 				System.out.println(in.available());
 			    String element = in.readUTF();
-			    System.out.println(element);
+			    System.out.print(element);
 			    
 			}
 		} catch (IOException e)
@@ -416,7 +416,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 					try
 					{
 						btSocket.close();
-						publishProgress("....Paired Device Not Found...","Please Turn on the paired device");
+						publishProgress("....Paired Device Not Found...","Please Turn on The Bartender");
 						sleep(1500);
 						
 						//publishProgress("....Closing Connection...");
@@ -441,15 +441,15 @@ public class MainActivity extends SherlockFragmentActivity implements
 		{
 			txt.setText(values[0]);
 			
-			//if(values.length == 2)
-				//errorExit("Failed to connect to paired Device", values[1]);
+			if(values.length == 2)
+				errorExit("Failed to connect to paired Device", values[1]);
 
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result)
 		{
-			if (savedInstanceStateBundle == null )
+			if (savedInstanceStateBundle == null && result)
 			{
 				saveBTconfig.saveBluetoothAdapter(btAdapter);
 				saveBTconfig.saveBluetoothDevice(device);
