@@ -356,8 +356,8 @@ public class MixOnTheSpot extends Fragment
 			if(!order.containsKey(tag.get()[0]) && seekBar.getProgress() != 0)
 			{
 				order.put(tag.get()[0], tag.get()[2]);
-				order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
-				System.out.println(Character.toChars(seekBar.getProgress()+48));
+				order.put(tag.get()[0]+" measurement", String.valueOf(seekBar.getProgress()));
+				
 			}
 				
 			else if(order.containsKey(tag.get()[0]) && seekBar.getProgress() >= 0)
@@ -368,7 +368,7 @@ public class MixOnTheSpot extends Fragment
 				}
 				else  {
 					//order.remove(tag.get()[0]+ " measurement");
-					order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
+					order.put(tag.get()[0]+" measurement", String.valueOf(seekBar.getProgress()));
 				}
 			}
 			//Log.i("values",order.values()+"");
@@ -392,9 +392,15 @@ public class MixOnTheSpot extends Fragment
 		{
 			seekbarValue = textlabels.get(tag.get()[1]);
 			if(progress == 0)
+			{
 				seekbarValue.setText(tag.get()[0]);
+				
+			}
 			else
+			{
 				seekbarValue.setText(String.valueOf(progress) + " ml");
+				
+			}
 		}
 		
 		@Override
@@ -410,7 +416,7 @@ public class MixOnTheSpot extends Fragment
 			if(!order.containsKey(tag.get()[0]) && seekBar.getProgress() != 0)
 			{
 				order.put(tag.get()[0], tag.get()[2]);
-				order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
+				order.put(tag.get()[0]+" measurement", String.valueOf(seekBar.getProgress()));
 				//System.out.println(Character.toChars(seekBar.getProgress()+48));
 			}
 				
@@ -422,10 +428,17 @@ public class MixOnTheSpot extends Fragment
 				}
 				else  {
 					//order.remove(tag.get()[0]+ " measurement");
-					order.put(tag.get()[0]+" measurement", String.valueOf(Character.toChars(seekBar.getProgress()+48)));
+					order.put(tag.get()[0]+" measurement", String.valueOf(seekBar.getProgress()));
 				}
 			}
-	
+			
+			if(order.isEmpty())
+			{
+				button.setEnabled(false);
+			}
+			else
+				button.setEnabled(true);
+			
 			Log.i("values",order.values()+"");
 			JSONLiquorOrder = new JSONArray(order.values());
 			

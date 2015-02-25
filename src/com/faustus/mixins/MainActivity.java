@@ -86,7 +86,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			setContentView(R.layout.splashscreen);
 			txt = (TextView) findViewById(R.id.loadingtext);
 			relativelayout = (RelativeLayout)findViewById(R.id.splash_root);
-			bitmap = new ImageLoader(getApplicationContext()).DecodeFromResource(R.drawable.splash2, 100);
+			bitmap = new ImageLoader(getApplicationContext()).DecodeFromResource(R.drawable.wine_glass, 250);
 			Drawable drawable = new BitmapDrawable(bitmap);
 		    relativelayout.setBackgroundDrawable(drawable);
 		     
@@ -247,6 +247,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			    System.out.print(element);
 			    
 			}
+			in.close();
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
@@ -276,6 +277,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		{
 			outStream.write(msgBuffer);
 			new DispenseTask(MainActivity.this).execute();
+			outStream.flush();
 		} catch (IOException e)
 		{
 			String msg = "In onResume() and an exception occurred during write: "

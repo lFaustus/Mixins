@@ -64,7 +64,16 @@ public class DispenseTask extends AsyncTask<Void, String, Void>
 	@Override
 	protected void onProgressUpdate(String... values)
 	{
-		prgdialog.dismiss();
+		//try
+		//{
+			prgdialog.dismiss();
+			//((MainActivity)activity).getInputStream().close();
+		//}
+		//catch (IOException e)
+		//{
+			// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
 	}
 
 	@Override

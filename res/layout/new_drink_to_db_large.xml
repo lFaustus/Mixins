@@ -86,7 +86,9 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/green_button"
-            android:text="Add to Menu" />
+            android:text="Add to Menu"
+            android:enabled="false" 
+            />
     </RelativeLayout>
 
     <TableLayout
@@ -118,7 +120,7 @@
                         android:id="@+id/seekBar1"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        app:max="100"
+                        app:max="200"
                         app:pointer_alpha_ontouch="100"
                         app:pointer_color="#0174DF"
                         app:pointer_halo_color="#880174DF"
@@ -146,7 +148,7 @@
                         android:id="@+id/seekBar2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        app:max="100"
+                        app:max="200"
                         app:pointer_alpha_ontouch="100"
                         app:pointer_color="#0174DF"
                         app:pointer_halo_color="#880174DF" />
@@ -173,7 +175,7 @@
                         android:id="@+id/seekBar3"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        app:max="100"
+                        app:max="200"
                         app:pointer_alpha_ontouch="100"
                         app:pointer_color="#0174DF"
                         app:pointer_halo_color="#880174DF" />
@@ -216,7 +218,7 @@
                         android:id="@+id/seekBar4"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        app:max="100"
+                        app:max="200"
                         app:pointer_alpha_ontouch="100"
                         app:pointer_color="#0174DF"
                         app:pointer_halo_color="#880174DF" />
@@ -243,7 +245,7 @@
                         android:id="@+id/seekBar5"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        app:max="100"
+                        app:max="200"
                         app:pointer_alpha_ontouch="100"
                         app:pointer_color="#0174DF"
                         app:pointer_halo_color="#880174DF" />
@@ -270,7 +272,7 @@
                         android:id="@+id/seekBar6"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        app:max="100"
+                        app:max="200"
                         app:pointer_alpha_ontouch="100"
                         app:pointer_color="#0174DF"
                         app:pointer_halo_color="#880174DF" />

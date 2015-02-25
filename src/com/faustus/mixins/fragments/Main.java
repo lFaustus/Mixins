@@ -105,7 +105,6 @@ public class Main extends Fragment implements OnLoadmoreListener
 	{
 		super.onActivityCreated(savedInstanceState);
 		Log.e("onActivityCreated", "onActivityCreated");
-
 		stgv = (StaggeredGridView) getView().findViewById(R.id.stgv);
 		
 		mDrawerLayout = (DrawerLayout) getView().findViewById(R.id.drawer_layout);
