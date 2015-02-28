@@ -61,7 +61,7 @@ public class DBAdapter
 		i = db.delete(DBHelper.TABLE_NAME, "JSONLiquour like '%"+ name +"%';", null);
 		db.close();
 		dbhelper.close();
-		Toast.makeText(context, "Liquor Deleted!" + String.valueOf(i), Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, name + " Deleted!",Toast.LENGTH_SHORT).show();
 	}
 
 	public ArrayList<String> getAllLiquors()
